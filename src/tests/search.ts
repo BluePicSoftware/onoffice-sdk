@@ -4,8 +4,8 @@ import { inspect } from 'util';
 const api = new OnOfficeAPIClient('TOKEN', 'SECRET');
 
 (async () => {
-  const res = await api.searchResource({
+  const res = await api.searchEstate({
     input: 'Aachen'
   });
-  console.log(inspect(res, false, Infinity));
+  console.log(res);
 })();

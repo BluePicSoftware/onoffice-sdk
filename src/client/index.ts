@@ -23,8 +23,11 @@ export default class OnOfficeAPIClient {
   readResource(type: string, parameters: IActionReadParams) {
     return this.fetchAction('urn:onoffice-de-ns:smart:2.5:smartml:action:read', type, '', '', parameters);
   }
-  searchResource(parameters: IActionGetParams) {
-    return this.fetchAction('urn:onoffice-de-ns:smart:2.5:smartml:action:get', 'search', '', 'estate', parameters);
+  searchResource(type: string, parameters: IActionGetParams) {
+    return this.fetchAction('urn:onoffice-de-ns:smart:2.5:smartml:action:get', 'search', '', type, parameters);
+  }
+  searchEstate(parameters: IActionGetParams) {
+    return this.searchResource('estate', parameters);
   }
   static getAPIBaseURL(version = 'stable') {
     return `https://api.onoffice.de/api/${ version }/api.php`;
