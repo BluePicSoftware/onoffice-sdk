@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "lib",
+    "lib": ["ES2016"],
+    "declaration": true,
+    "esModuleInterop": true,
+    "declarationDir": "lib/types",
+    "sourceMap": true,
+    "types": ["jest", "node", "@types/jest"]
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
