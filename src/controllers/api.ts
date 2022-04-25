@@ -1,19 +1,13 @@
-import { hmac } from '../util/helpers';
-import { IAction } from '../types';
-import axios from 'axios';
-
+import { hmac } from "../util/helpers";
+import { IAction, IOFAPIResponseActions } from "../types";
+import axios, { AxiosResponse } from "axios";
 
 export function signAction(action: IAction, token: string, secret: string) {
   const { resourcetype, actionid } = action;
 
   const timestamp = Date.now();
 
-  const actionStr = [
-    timestamp,
-    token,
-    resourcetype,
-    actionid,
-  ].join('');
+  const actionStr = [timestamp, token, resourcetype, actionid].join("");
 
   const hmacSign = hmac(actionStr, secret);
 
@@ -21,49 +15,59 @@ export function signAction(action: IAction, token: string, secret: string) {
     ...action,
     timestamp,
     hmac_version: 2,
-    hmac: hmacSign
-  }
+    hmac: hmacSign,
+  };
 }
 
-
-export async function fetchActions(actions: IAction[], token: string, secret: string, endpoint: string, responseType: 'arraybuffer' | 'blob' | 'document' | 'json' | 'stream' | 'text' = 'json') {
-
+export async function fetchActions(
+  actions: IAction[],
+  token: string,
+  secret: string,
+  endpoint: string,
+  responseType:
+    | "arraybuffer"
+    | "blob"
+    | "document"
+    | "json"
+    | "stream"
+    | "text" = "json"
+) {
   const payload = {
     token,
     request: {
-      actions: actions.map(action => signAction(action, token, secret))
-    }
-  }
+      actions: actions.map((action) => signAction(action, token, secret)),
+    },
+  };
 
   try {
-    const { data } = await axios.post(endpoint, payload, { responseType });
+    const { data }: AxiosResponse<IOFAPIResponseActions> = await axios.post(
+      endpoint,
+      payload,
+      { responseType }
+    );
     const { status, response } = data;
-    
 
     if (status.code >= 300) {
       return {
         error: {
           code: status.errorcode,
-          message: status.message
+          message: status.message,
         },
-        result: null
-      }
-    }
-    else {
+        result: null,
+      };
+    } else {
       return {
         error: null,
-        result: response.results.map(({ data }) => data)
+        result: response.results.map(({ data }) => data),
       };
     }
-  }
-  catch (err) {    
+  } catch (err) {
     return {
       error: {
         code: 1,
-        message: 'error with request',
+        message: "error with request",
       },
-      result: null
+      result: null,
     };
   }
 }
-

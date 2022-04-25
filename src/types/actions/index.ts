@@ -7,18 +7,16 @@ export interface IActionGeneric {
   hmac?: string;
 }
 
-
-export type TActionReadId = 'urn:onoffice-de-ns:smart:2.5:smartml:action:read';
-export type TActionGetId = 'urn:onoffice-de-ns:smart:2.5:smartml:action:get';
-
+export type TActionReadId = "urn:onoffice-de-ns:smart:2.5:smartml:action:read";
+export type TActionGetId = "urn:onoffice-de-ns:smart:2.5:smartml:action:get";
 
 export interface IActionReadParams {
   data: string[];
   filter: {
     [k: string]: {
-      op: '>' | '<' | '=';
+      op: ">" | "<" | "=";
       val: number;
-    }[]
+    }[];
   };
   listlimit: number;
   sortby: {
@@ -27,7 +25,7 @@ export interface IActionReadParams {
 }
 export interface IActionRead extends IActionGeneric {
   actionid: TActionReadId;
-  parameters: IActionReadParams
+  parameters: IActionReadParams;
 }
 
 export interface IActionGetParams {
@@ -35,10 +33,8 @@ export interface IActionGetParams {
 }
 export interface IActionGet extends IActionGeneric {
   actionid: TActionGetId;
-  parameters: IActionGetParams
+  parameters: IActionGetParams;
 }
-
-
 
 export type IAction = IActionRead | IActionGet;
 export type IActionId = TActionReadId | TActionGetId;

@@ -14,7 +14,6 @@ const res = await api.searchResource({
 console.log(res);
 ```
 
-
 ### Native Methods 
 
 ```typescript

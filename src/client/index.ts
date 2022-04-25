@@ -1,6 +1,6 @@
-import { fetchActions } from '../controllers/api'
-import { IAction, IActionParams, IActionId, IActionReadParams } from '../types';
-import { IActionGetParams } from '../types/actions';
+import { fetchActions } from "../controllers/api";
+import { IAction, IActionParams, IActionId, IActionReadParams } from "../types";
+import { IActionGetParams } from "../types/actions";
 
 export default class OnOfficeAPIClient {
   baseURL: string;
@@ -11,26 +11,51 @@ export default class OnOfficeAPIClient {
     this.secret = secret;
     this.baseURL = OnOfficeAPIClient.getAPIBaseURL(version);
   }
-  private fetchAction(actionId: IActionId, resourceType: string, indentifier: string, resourceId: string, parameters: IActionParams) {
-    return fetchActions([{
-      actionid: actionId,
-      indentifier,
-      parameters,
-      resourceid: resourceId,
-      resourcetype: resourceType
-    } as IAction], this.token, this.secret, this.baseURL, 'json');
+  private fetchAction(
+    actionId: IActionId,
+    resourceType: string,
+    indentifier: string,
+    resourceId: string,
+    parameters: IActionParams
+  ) {
+    return fetchActions(
+      [
+        {
+          actionid: actionId,
+          indentifier,
+          parameters,
+          resourceid: resourceId,
+          resourcetype: resourceType,
+        } as IAction,
+      ],
+      this.token,
+      this.secret,
+      this.baseURL,
+      "json"
+    );
   }
   readResource(type: string, parameters: IActionReadParams) {
-    return this.fetchAction('urn:onoffice-de-ns:smart:2.5:smartml:action:read', type, '', '', parameters);
+    return this.fetchAction(
+      "urn:onoffice-de-ns:smart:2.5:smartml:action:read",
+      type,
+      "",
+      "",
+      parameters
+    );
   }
   searchResource(type: string, parameters: IActionGetParams) {
-    return this.fetchAction('urn:onoffice-de-ns:smart:2.5:smartml:action:get', 'search', '', type, parameters);
+    return this.fetchAction(
+      "urn:onoffice-de-ns:smart:2.5:smartml:action:get",
+      "search",
+      "",
+      type,
+      parameters
+    );
   }
   searchEstate(parameters: IActionGetParams) {
-    return this.searchResource('estate', parameters);
+    return this.searchResource("estate", parameters);
   }
-  static getAPIBaseURL(version = 'stable') {
-    return `https://api.onoffice.de/api/${ version }/api.php`;
+  static getAPIBaseURL(version = "stable") {
+    return `https://api.onoffice.de/api/${version}/api.php`;
   }
-
 }
