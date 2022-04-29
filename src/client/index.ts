@@ -55,6 +55,18 @@ export default class OnOfficeAPIClient {
   searchEstate(parameters: IActionGetParams) {
     return this.searchResource("estate", parameters);
   }
+  unlockProvider(parameterCacheId: string, isRegularCustomer: number = 0) {
+    return this.fetchAction(
+      "urn:onoffice-de-ns:smart:2.5:smartml:action:do",
+      "unlockProvider",
+      "",
+      "",
+      {
+        parameterCacheId,
+        isRegularCustomer
+      }
+    )
+  }
   static getAPIBaseURL(version = "stable") {
     return `https://api.onoffice.de/api/${version}/api.php`;
   }

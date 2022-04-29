@@ -9,6 +9,7 @@ export interface IActionGeneric {
 
 export type TActionReadId = "urn:onoffice-de-ns:smart:2.5:smartml:action:read";
 export type TActionGetId = "urn:onoffice-de-ns:smart:2.5:smartml:action:get";
+export type TActionDoId = "urn:onoffice-de-ns:smart:2.5:smartml:action:do";
 
 export interface IActionReadParams {
   data: string[];
@@ -36,6 +37,10 @@ export interface IActionGet extends IActionGeneric {
   parameters: IActionGetParams;
 }
 
+export interface IActionDo extends IActionGeneric {
+  actionid: TActionDoId;
+}
+
 export type IAction = IActionRead | IActionGet;
-export type IActionId = TActionReadId | TActionGetId;
-export type IActionParams = IActionReadParams | IActionGetParams;
+export type IActionId = TActionReadId | TActionGetId | TActionDoId;
+export type IActionParams = IActionReadParams | IActionGetParams | any;
