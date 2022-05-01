@@ -10,14 +10,18 @@ export { IAction, IActionId, IActionParams, IActionReadParams };
 export type IOFAPIResponse = {
   status: {
     code: number;
-    message: string;
     errorcode: number;
   };
-  response: any;
+  response: IOFActionResult;
 };
-export type IOFActionResult = any;
-export interface IOFAPIResponseActions extends IOFAPIResponse {
-  response: {
-    results: IOFActionResult[];
-  };
-}
+
+export type IOFActionResult = {
+  actionid: string;
+  resourceid: string;
+  resourcetype: string;
+  identifier: string;
+  status: {
+    code: string;
+    message: string;
+  }
+};

@@ -1,6 +1,6 @@
-import OnOfficeAPIClient from "../client";
+import { DirectOnOfficeAPIClient } from "../client";
 
-const api = new OnOfficeAPIClient("TOKEN", "SECRET");
+const api = new DirectOnOfficeAPIClient("TOKEN", "SECRET");
 
 test("basic api call", async () => {
   const res = await api.searchEstate({

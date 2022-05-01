@@ -1,5 +1,6 @@
-export { default as OnOfficeAPIClient } from "./client";
+export { default as ProxyOnOfficeAPIClient } from "./client/ProxyOnOfficeAPIClient";
+export { default as DirectOnOfficeAPIClient } from "./client/DirectOnOfficeAPIClient";
 export { fetchActions, signAction } from "./controllers/api";
 
-export * from "./types";
-export * as Types from "./types";
+export * from "./types/index";
+export * as Types from "./types/index";

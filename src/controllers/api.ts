@@ -1,6 +1,6 @@
 import { hmac } from "../util/helpers";
-import { IAction, IOFAPIResponseActions } from "../types";
-import axios, { AxiosResponse } from "axios";
+import { IAction, IOFAPIResponse } from "../types";
+import axios from "axios";
 
 export function signAction(action: IAction, token: string, secret: string) {
   const { resourcetype, actionid } = action;
@@ -39,35 +39,14 @@ export async function fetchActions(
     },
   };
 
-  try {
-    const { data }: AxiosResponse<IOFAPIResponseActions> = await axios.post(
-      endpoint,
-      payload,
-      { responseType }
-    );
-    const { status, response } = data;
+  const response = await axios.post(
+    endpoint,
+    payload,
+    { responseType }
+  );
 
-    if (status.code >= 300) {
-      return {
-        error: {
-          code: status.errorcode,
-          message: status.message,
-        },
-        result: null,
-      };
-    } else {
-      return {
-        error: null,
-        result: response.results.map(({ data }) => data),
-      };
-    }
-  } catch (err) {
-    return {
-      error: {
-        code: 1,
-        message: "error with request",
-      },
-      result: null,
-    };
+  if (response.status != 200) {
+    throw "API call failed with status: " + response.status;
   }
+  return response.data as IOFAPIResponse;
 }

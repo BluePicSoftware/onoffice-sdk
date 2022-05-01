@@ -26,8 +26,6 @@ const args = Object.assign({
 
 const target = args.target;
 
-
-
 const regexImportStatement = new RegExp(args['regex-import-statement']);
 const regexFilename = new RegExp(args['regex-filename']);
 
@@ -63,6 +61,7 @@ lookup(target, async (item) => {
             }
           }
         }
+        // eslint-disable-next-line no-empty
         catch {}
         return destinationPath;
       })();
