@@ -46,16 +46,23 @@ export async function fetchActions(
     },
   };
   console.log(JSON.stringify(payload));
-  const response = await axios.post(
-    endpoint,
-    payload,
-    { responseType }
-  );
-  console.log(":::RESPONSE:::")
-  console.log(JSON.stringify(response));
-  console.log(":::END:::")
-  if (response.status != 200) {
-    throw "API call failed with status: " + response.status;
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const response = await axios.post(
+      endpoint,
+      payload,
+      { responseType }
+    );
+    console.log(":::RESPONSE:::")
+    console.log(JSON.stringify(response));
+    console.log(":::END:::")
+    if (response.status != 200) {
+      throw "API call failed with status: " + response.status;
+    }
+    return response.data as IOFAPIResponse;
   }
-  return response.data as IOFAPIResponse;
+  catch(err) {
+    console.log(JSON.stringify(err));
+    throw err;
+  }
 }

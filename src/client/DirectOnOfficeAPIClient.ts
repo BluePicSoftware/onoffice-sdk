@@ -11,28 +11,34 @@ export default class DirectOnOfficeAPIClient extends BaseOnOfficeAPIClient {
     this.baseURL = DirectOnOfficeAPIClient.getAPIBaseURL(version);
   }
 
-  protected fetchAction(
+  protected async fetchAction(
     actionId: IActionId,
     resourceType: string,
     indentifier: string,
     resourceId: string,
     parameters: IActionParams
   ) {
-    return fetchActions(
-      [
-        {
-          actionid: actionId,
-          indentifier,
-          parameters,
-          resourceid: resourceId,
-          resourcetype: resourceType,
-        } as IAction,
-      ],
-      this.token,
-      this.secret,
-      this.baseURL,
-      "json"
-    );
+    try {
+      return await fetchActions(
+        [
+          {
+            actionid: actionId,
+            indentifier,
+            parameters,
+            resourceid: resourceId,
+            resourcetype: resourceType,
+          } as IAction,
+        ],
+        this.token,
+        this.secret,
+        this.baseURL,
+        "json"
+      );
+    }
+    catch(err) {
+      console.log(JSON.stringify(err));
+      throw err;
+    }
   }
 
   public static getAPIBaseURL(version = "stable") {
