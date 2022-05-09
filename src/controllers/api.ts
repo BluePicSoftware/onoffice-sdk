@@ -2,14 +2,14 @@ import { hmac } from "../util/helpers";
 import { IAction, IOFAPIResponse } from "../types";
 import axios from "axios";
 
-export function signAction(action: IAction, token: string, secret: string) {
+export async function signAction(action: IAction, token: string, secret: string) {
   const { resourcetype, actionid } = action;
 
   const timestamp = Date.now();
 
   const actionStr = [timestamp, token, resourcetype, actionid].join("");
   console.log(actionStr);
-  const hmacSign = hmac(actionStr, secret);
+  const hmacSign = await hmac(actionStr, secret);
   console.log("signed:");
   console.log(hmacSign);
 
@@ -34,10 +34,15 @@ export async function fetchActions(
     | "stream"
     | "text" = "json"
 ) {
+  const signedActions = [];
+  for(const action of actions) {
+    const signedAction = await signAction(action, token, secret);
+    signedActions.push(signedAction); 
+  }
   const payload = {
     token,
     request: {
-      actions: actions.map((action) => signAction(action, token, secret)),
+      actions: signedActions,
     },
   };
   console.log(JSON.stringify(payload));
