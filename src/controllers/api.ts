@@ -54,8 +54,7 @@ export async function fetchActions(
       { responseType }
     );
     console.log(":::RESPONSE:::")
-    console.log(response);
-    console.log(JSON.stringify(response));
+    console.log(response?.data?.response ?? "NOPE");
     console.log(":::END:::")
     if (response.status != 200) {
       throw "API call failed with status: " + response.status;
