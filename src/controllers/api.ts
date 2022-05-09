@@ -5,7 +5,8 @@ import axios from "axios";
 export function signAction(action: IAction, token: string, secret: string) {
   const { resourcetype, actionid } = action;
 
-  const timestamp = Date.now();
+  //they expect a PHP timestamp...
+  const timestamp = Date.now() / 1000;
 
   const actionStr = [timestamp, token, resourcetype, actionid].join("");
   console.log(actionStr);
