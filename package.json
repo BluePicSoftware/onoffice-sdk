@@ -1,6 +1,6 @@
 {
   "name": "onoffice",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "OnOffice typescript api client and sdk",
   "type": "module",
   "engines": {
