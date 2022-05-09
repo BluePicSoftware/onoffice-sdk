@@ -1,5 +1,4 @@
-import { encode } from "base64-arraybuffer";
-import hmacSHA256 from 'crypto-js/hmac-sha256.js';
+import CryptoJS from 'crypto-js';
 
 export function detectEnv() {
   if (typeof window !== "undefined" && typeof window.document !== "undefined") {
@@ -18,23 +17,6 @@ export const webcrypto = new Promise(async (resolve) => {
   }
 }) as Promise<Crypto>;
 
-// (await import('crypto')).createHmac("sha256", secret).update(value).digest().toString('base64')
 export function hmac(value: string, secret: string) {
-  return hmacSHA256(value, secret).toString();
-  // const crypto = await webcrypto;
-
-  // const key = await crypto.subtle.importKey(
-  //   "raw",
-  //   new TextEncoder().encode(secret),
-  //   { name: "HMAC", hash: { name: "SHA-256" } },
-  //   false,
-  //   ["sign", "verify"]
-  // );
-  // const signature = await crypto.subtle.sign(
-  //   "HMAC",
-  //   key,
-  //   new TextEncoder().encode(value)
-  // );
-
-  // return encode(signature);
+  return CryptoJS.HmacSHA256(value, secret).toString(CryptoJS.enc.Base64);
 }
