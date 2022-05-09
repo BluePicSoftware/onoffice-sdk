@@ -54,6 +54,7 @@ export async function fetchActions(
       { responseType }
     );
     console.log(":::RESPONSE:::")
+    console.log(response);
     console.log(JSON.stringify(response));
     console.log(":::END:::")
     if (response.status != 200) {
@@ -62,6 +63,7 @@ export async function fetchActions(
     return response.data as IOFAPIResponse;
   }
   catch(err) {
+    console.log("error");
     console.log(JSON.stringify(err));
     throw err;
   }
