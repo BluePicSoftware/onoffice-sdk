@@ -38,13 +38,14 @@ export async function fetchActions(
       actions: actions.map((action) => signAction(action, token, secret)),
     },
   };
-  console.log(payload);
+  console.log(JSON.stringify(payload));
   const response = await axios.post(
     endpoint,
     payload,
     { responseType }
   );
-  console.log(response);
+  console.log(":::RESPONSE:::")
+  console.log(JSON.stringify(response));
   if (response.status != 200) {
     throw "API call failed with status: " + response.status;
   }
