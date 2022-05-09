@@ -4,9 +4,11 @@ import axios from "axios";
 
 export default class ProxyOnOfficeAPIClient extends BaseOnOfficeAPIClient {
   proxyBaseURL: string;
-  constructor(token: string, proxyBaseURL: string) {
+  jwt: string;
+  constructor(token: string, proxyBaseURL: string, jwt: string) {
     super(token);
     this.proxyBaseURL = proxyBaseURL;
+    this.jwt = jwt;
   }
 
   protected fetchAction(
@@ -25,7 +27,12 @@ export default class ProxyOnOfficeAPIClient extends BaseOnOfficeAPIClient {
             parameters,
             resourceid: resourceId,
             resourcetype: resourceType,
-          } as IAction
+          } as IAction,
+          {
+            headers: {
+              "Authorization": this.jwt
+            }
+          }
         );
         if(response.status != 200) {
           return reject('API call failed with status: ' + response.status);
