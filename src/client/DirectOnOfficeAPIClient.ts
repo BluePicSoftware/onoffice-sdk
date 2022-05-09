@@ -5,8 +5,11 @@ import BaseOnOfficeAPIClient from "./BaseOnOfficeAPIClient";
 export default class DirectOnOfficeAPIClient extends BaseOnOfficeAPIClient {
   baseURL: string;
   secret: string;
+  token: string;
+
   constructor(token: string, secret: string, version?: string) {
-    super(token);
+    super();
+    this.token = token;
     this.secret = secret;
     this.baseURL = DirectOnOfficeAPIClient.getAPIBaseURL(version);
   }
@@ -18,27 +21,21 @@ export default class DirectOnOfficeAPIClient extends BaseOnOfficeAPIClient {
     resourceId: string,
     parameters: IActionParams
   ) {
-    try {
-      return await fetchActions(
-        [
-          {
-            actionid: actionId,
-            indentifier,
-            parameters,
-            resourceid: resourceId,
-            resourcetype: resourceType,
-          } as IAction,
-        ],
-        this.token,
-        this.secret,
-        this.baseURL,
-        "json"
-      );
-    }
-    catch(err) {
-      console.log(JSON.stringify(err));
-      throw err;
-    }
+    return await fetchActions(
+      [
+        {
+          actionid: actionId,
+          indentifier,
+          parameters,
+          resourceid: resourceId,
+          resourcetype: resourceType,
+        } as IAction,
+      ],
+      this.token,
+      this.secret,
+      this.baseURL,
+      "json"
+    );
   }
 
   public static getAPIBaseURL(version = "stable") {

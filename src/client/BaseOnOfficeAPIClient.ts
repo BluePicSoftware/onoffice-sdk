@@ -2,10 +2,6 @@ import { IActionParams, IActionId, IActionReadParams, IOFAPIResponse } from "../
 import { IActionGetParams } from "../types/actions";
 
 export default abstract class OnOfficeAPIClient {
-  token: string;
-  constructor(token: string) {
-    this.token = token;
-  }
   
   protected abstract fetchAction(
     actionId: IActionId,

@@ -5,8 +5,8 @@ import axios from "axios";
 export default class ProxyOnOfficeAPIClient extends BaseOnOfficeAPIClient {
   proxyBaseURL: string;
   jwt: string;
-  constructor(token: string, proxyBaseURL: string, jwt: string) {
-    super(token);
+  constructor(proxyBaseURL: string, jwt: string) {
+    super();
     this.proxyBaseURL = proxyBaseURL;
     this.jwt = jwt;
   }
@@ -20,7 +20,7 @@ export default class ProxyOnOfficeAPIClient extends BaseOnOfficeAPIClient {
   ) {
     return new Promise<IOFAPIResponse>(async (resolve, reject) => {
       try {
-        const response = await axios.post(this.proxyBaseURL + "/onoffice/proxy/" + this.token, 
+        const response = await axios.post(this.proxyBaseURL + "/onoffice/proxy/", 
           {
             actionid: actionId,
             indentifier,

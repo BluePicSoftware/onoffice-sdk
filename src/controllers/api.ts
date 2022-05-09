@@ -5,14 +5,11 @@ import axios from "axios";
 export function signAction(action: IAction, token: string, secret: string) {
   const { resourcetype, actionid } = action;
 
-  //they expect a PHP timestamp...
+  //PHP timestamps are SECONDS since 01.01.1970
   const timestamp = Math.round(Date.now() / 1000);
 
   const actionStr = [timestamp, token, resourcetype, actionid].join("");
-  console.log(actionStr);
   const hmacSign = hmac(actionStr, secret);
-  console.log("signed:");
-  console.log(hmacSign);
 
   return {
     ...action,
@@ -35,36 +32,20 @@ export async function fetchActions(
     | "stream"
     | "text" = "json"
 ) {
-  const signedActions = [];
-  for(const action of actions) {
-    const signedAction = signAction(action, token, secret);
-    signedActions.push(signedAction); 
-  }
   const payload = {
     token,
     request: {
-      actions: signedActions,
+      actions: actions.map((a) => signAction(a, token, secret)),
     },
   };
-  console.log(JSON.stringify(payload));
-  // eslint-disable-next-line no-useless-catch
-  try {
-    const response = await axios.post(
-      endpoint,
-      payload,
-      { responseType }
-    );
-    console.log(":::RESPONSE:::")
-    console.log(response?.data?.response ?? "NOPE");
-    console.log(":::END:::")
-    if (response.status != 200) {
-      throw "API call failed with status: " + response.status;
-    }
-    return response.data as IOFAPIResponse;
+
+  const response = await axios.post(
+    endpoint,
+    payload,
+    { responseType }
+  );
+  if (response.status != 200) {
+    throw "API call failed with status: " + response.status;
   }
-  catch(err) {
-    console.log("error");
-    console.log(JSON.stringify(err));
-    throw err;
-  }
+  return response.data as IOFAPIResponse;
 }
