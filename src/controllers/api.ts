@@ -8,8 +8,10 @@ export function signAction(action: IAction, token: string, secret: string) {
   const timestamp = Date.now();
 
   const actionStr = [timestamp, token, resourcetype, actionid].join("");
-
+  console.log(actionStr);
   const hmacSign = hmac(actionStr, secret);
+  console.log("signed:");
+  console.log(hmacSign);
 
   return {
     ...action,
