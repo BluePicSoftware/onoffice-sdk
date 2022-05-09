@@ -19,7 +19,7 @@ export const webcrypto = new Promise(async (resolve) => {
 }) as Promise<Crypto>;
 
 // (await import('crypto')).createHmac("sha256", secret).update(value).digest().toString('base64')
-export async function hmac(value: string, secret: string) {
+export function hmac(value: string, secret: string) {
   return hmacSHA256(value, secret).toString();
   // const crypto = await webcrypto;
 

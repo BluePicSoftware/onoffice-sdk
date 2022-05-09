@@ -2,14 +2,14 @@ import { hmac } from "../util/helpers";
 import { IAction, IOFAPIResponse } from "../types";
 import axios from "axios";
 
-export async function signAction(action: IAction, token: string, secret: string) {
+export function signAction(action: IAction, token: string, secret: string) {
   const { resourcetype, actionid } = action;
 
   const timestamp = Date.now();
 
   const actionStr = [timestamp, token, resourcetype, actionid].join("");
   console.log(actionStr);
-  const hmacSign = await hmac(actionStr, secret);
+  const hmacSign = hmac(actionStr, secret);
   console.log("signed:");
   console.log(hmacSign);
 
@@ -36,7 +36,7 @@ export async function fetchActions(
 ) {
   const signedActions = [];
   for(const action of actions) {
-    const signedAction = await signAction(action, token, secret);
+    const signedAction = signAction(action, token, secret);
     signedActions.push(signedAction); 
   }
   const payload = {
@@ -53,6 +53,7 @@ export async function fetchActions(
   );
   console.log(":::RESPONSE:::")
   console.log(JSON.stringify(response));
+  console.log(":::END:::")
   if (response.status != 200) {
     throw "API call failed with status: " + response.status;
   }
