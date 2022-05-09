@@ -30,7 +30,7 @@ export default class ProxyOnOfficeAPIClient extends BaseOnOfficeAPIClient {
           } as IAction,
           {
             headers: {
-              "Authorization": this.jwt
+              "Authorization": "JWT " + this.jwt
             }
           }
         );
