@@ -1,6 +1,6 @@
 {
   "name": "onoffice",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "OnOffice typescript api client and sdk",
   "type": "module",
   "engines": {
@@ -42,6 +42,7 @@
   "license": "UNLICENSED",
   "devDependencies": {
     "@babel/types": "^7.17.0",
+    "@types/crypto-js": "^4.1.1",
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.26",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
@@ -57,7 +58,8 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
-    "base64-arraybuffer": "^1.0.2"
+    "base64-arraybuffer": "^1.0.2",
+    "crypto-js": "^4.1.1"
   },
   "watch": {
     "build": {
