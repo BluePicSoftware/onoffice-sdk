@@ -10,17 +10,21 @@ export interface IActionGeneric {
 export type TActionReadId = "urn:onoffice-de-ns:smart:2.5:smartml:action:read";
 export type TActionGetId = "urn:onoffice-de-ns:smart:2.5:smartml:action:get";
 export type TActionDoId = "urn:onoffice-de-ns:smart:2.5:smartml:action:do";
+export type IActionFilter = {
+  [k: string]: {
+    op: ">" | "<" | "=";
+    val: number;
+  }[];
+};
+
+export type IImageSize = 'original';
+export type ILangCode = 'ENG' | 'GER';
 
 export interface IActionReadParams {
-  data: string[];
-  filter: {
-    [k: string]: {
-      op: ">" | "<" | "=";
-      val: number;
-    }[];
-  };
-  listlimit: number;
-  sortby: {
+  data?: string[];
+  filter?: IActionFilter;
+  listlimit?: number;
+  sortby?: {
     [k: string]: string;
   };
 }
@@ -30,7 +34,11 @@ export interface IActionRead extends IActionGeneric {
 }
 
 export interface IActionGetParams {
-  input: string;
+  input?: string;
+  estateids?:  number[];
+  categories?:  string[];
+  size?: IImageSize;
+  language?: ILangCode;
 }
 export interface IActionGet extends IActionGeneric {
   actionid: TActionGetId;
@@ -40,7 +48,11 @@ export interface IActionGet extends IActionGeneric {
 export interface IActionDo extends IActionGeneric {
   actionid: TActionDoId;
 }
+export interface IActionDoParams {
+  parameterCacheId?: string;
+  isRegularCustomer?: number;
+}
 
 export type IAction = IActionRead | IActionGet;
 export type IActionId = TActionReadId | TActionGetId | TActionDoId;
-export type IActionParams = IActionReadParams | IActionGetParams | any;
+export type IActionParams = IActionReadParams | IActionGetParams | IActionDoParams;

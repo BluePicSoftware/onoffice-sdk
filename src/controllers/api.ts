@@ -19,7 +19,7 @@ export function signAction(action: IAction, token: string, secret: string) {
   };
 }
 
-export async function fetchActions(
+export async function fetchActions<RecordT>(
   actions: IAction[],
   token: string,
   secret: string,
@@ -47,5 +47,5 @@ export async function fetchActions(
   if (response.status != 200) {
     throw "API call failed with status: " + response.status;
   }
-  return response.data as IOFAPIResponse;
+  return response.data as IOFAPIResponse<RecordT>;
 }

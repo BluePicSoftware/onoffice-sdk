@@ -4,7 +4,7 @@
 The easiest way to use the API is the `OnOfficeAPIClient` class which provides straight-forward methods such as `searchResource()`.
 
 ```typescript
-import { OnOfficeAPIController } from 'onoffice-sdk';
+import { OnOfficeAPIController } from 'onoffice';
 
 const api = new OnOfficeAPIClient('TOKEN', 'SECRET');
 
@@ -17,7 +17,7 @@ console.log(res);
 ### Native Methods 
 
 ```typescript
-import { fetchActions, signAction } from 'onoffice-sdk';
+import { fetchActions, signAction } from 'onoffice';
 
 // More native interaction with onoffice API but still handling signing the request
 

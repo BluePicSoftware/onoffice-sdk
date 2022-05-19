@@ -11,14 +11,14 @@ export default class ProxyOnOfficeAPIClient extends BaseOnOfficeAPIClient {
     this.jwt = jwt;
   }
 
-  protected fetchAction(
+  protected fetchAction<TRecord>(
     actionId: IActionId,
     resourceType: string,
     indentifier: string,
     resourceId: string,
     parameters: IActionParams
   ) {
-    return new Promise<IOFAPIResponse>(async (resolve, reject) => {
+    return new Promise<IOFAPIResponse<TRecord>>(async (resolve, reject) => {
       try {
         const response = await axios.post(this.proxyBaseURL + "/onoffice/proxy/", 
           {

@@ -14,14 +14,14 @@ export default class DirectOnOfficeAPIClient extends BaseOnOfficeAPIClient {
     this.baseURL = DirectOnOfficeAPIClient.getAPIBaseURL(version);
   }
 
-  protected async fetchAction(
+  protected async fetchAction<TRecord>(
     actionId: IActionId,
     resourceType: string,
     indentifier: string,
     resourceId: string,
     parameters: IActionParams
   ) {
-    return await fetchActions(
+    return await fetchActions<TRecord>(
       [
         {
           actionid: actionId,
