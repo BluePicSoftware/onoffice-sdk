@@ -2,3 +2,4 @@ node_Modules
 .DS_Store
 tests
 workflows
+src

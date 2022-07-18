@@ -1,13 +1,11 @@
 {
   "name": "onoffice",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "OnOffice typescript api client and sdk",
   "type": "module",
   "engines": {
     "node": ">=15.0.0"
   },
-  "main": "./lib/cjs/index.js",
-  "module": "./lib/esm/index.js",
   "exports": {
     ".": {
       "types": "./lib/esm/types/index.d.ts",
